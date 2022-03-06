@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,12 +18,36 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
+
   @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public String helloWorld() {
     return "The application is running.";
   }
+
+  /*
+  @PostMapping(value = "/users", produces="application/json")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public String helloPostWorld() {
+      return "{\"test\": \"Hello using @ResponseBody juhu\"}";
+  }
+
+  @GetMapping(value = "/users", produces="application/json")
+  //@ResponseStatus(HttpStatus.OK)
+  //@ResponseBody
+  public String getUsers() {
+      return "{\"test\": \"Hello using @ResponseBody juhu\"}";
+  }
+
+  @GetMapping(path = "/users/{user_id}")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public ResponseEntity get_user() {
+      System.out.println("/user/{user_id}");
+      return new ResponseEntity<>("/user/{user_id}", HttpStatus.OK);
+  }*/
 
   @Bean
   public WebMvcConfigurer corsConfigurer() {

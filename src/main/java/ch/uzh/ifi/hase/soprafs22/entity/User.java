@@ -16,13 +16,24 @@ import java.io.Serializable;
  * the primary key
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  public User(){
+
+  }
+
+  public User(long id, String name, String username, String token) {
+      this.setId(id);
+      this.setName(name);
+      this.setUsername(username);
+      this.setToken(token);
+  }
+
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @Column(nullable = false)

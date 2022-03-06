@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 5.3//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-5.3.dtd">
+<hibernate-configuration>
+<session-factory>
+
+    <property name="hbm2ddl.auto">update</property>
+    <property name="dialect">org.hibernate.dialect.PostgreSQL92Dialect</property>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/se_lab/</property>
+    <property name="connection.username">jankreischer</property>
+    <property name="connection.password">2029fXy!</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+
+    <property name="show_sql">true</property> <!-- Show SQL in console -->
+    <property name="format_sql">true</property> <!-- Show SQL formatted -->
+</session-factory>
+</hibernate-configuration>

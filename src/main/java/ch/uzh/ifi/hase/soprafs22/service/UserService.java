@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -36,7 +37,22 @@ public class UserService {
   }
 
   public List<User> getUsers() {
-    return this.userRepository.findAll();
+      //return this.userRepository.findAll();
+      //List<User> userList = new ArrayList<User>();
+      //User user_1 = new User(1, "Jan Bauer", "jaba", "none");
+      //userList.add(user_1);
+      //User user_2 = new User(2, "Tobias Bayer", "karies_peter", "none");
+      //userList.add(user_2);
+      //User user_3 = new User(3, "Simon Mayer", "titsi", "none");
+      //userList.add(user_3);
+      //userList.add(Mockito.mock(User.class));
+      //userList.add(Mockito.mock(User.class));
+      //return userList;
+      return userRepository.findAll();
+  }
+
+  public Optional<User> getUser(Long userId) {
+      return userRepository.findById(userId);
   }
 
   public User createUser(User newUser) {
@@ -50,6 +66,8 @@ public class UserService {
     newUser = userRepository.save(newUser);
     userRepository.flush();
 
+    System.out.println(newUser.toString());
+    System.out.println("Test");
     log.debug("Created Information for User: {}", newUser);
     return newUser;
   }

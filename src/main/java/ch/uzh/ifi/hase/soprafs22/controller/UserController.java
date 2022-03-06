@@ -7,9 +7,11 @@ import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User Controller
@@ -19,6 +21,7 @@ import java.util.List;
  * UserService and finally return the result.
  */
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
   private final UserService userService;
@@ -27,7 +30,23 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/users")
+  @GetMapping(path = "/{userId}")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public UserGetDTO getUser(@PathVariable long userId) {
+      UserGetDTO userGetDTO;
+      Optional<User> user = userService.getUser(userId);
+      if(user.isPresent()){
+
+          return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user.get());
+      }
+      else {
+          return new UserGetDTO();
+      }
+
+    }
+
+  @GetMapping()
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<UserGetDTO> getAllUsers() {
@@ -42,7 +61,7 @@ public class UserController {
     return userGetDTOs;
   }
 
-  @PostMapping("/users")
+  @PostMapping(consumes="application/json", produces="application/json")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
@@ -52,6 +71,7 @@ public class UserController {
     // create user
     User createdUser = userService.createUser(userInput);
 
+    System.out.println("Creating new user");
     // convert internal representation of user back to API
     return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
   }

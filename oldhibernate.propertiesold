@@ -1,0 +1,6 @@
+hibernate.connection.username=jankreischer
+hibernate.connection.password=2029fXy!
+hibernate.connection.dialect=org.hibernate.dialect.PostgreSQL92Dialect
+hibernate.connection.url= jdbc:postgresql://localhost:5432/se_lab/
+hibernate.connection.ddl-auto=update
+hibernate.connection.enabled=true

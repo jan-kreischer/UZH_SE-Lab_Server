@@ -6,6 +6,8 @@ import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Optional;
+
 /**
  * DTOMapper
  * This class is responsible for generating classes that will automatically
