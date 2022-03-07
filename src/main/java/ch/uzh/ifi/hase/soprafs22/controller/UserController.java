@@ -8,6 +8,7 @@ import ch.uzh.ifi.hase.soprafs22.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +31,54 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping(path = "/{userId}")
+    @PostMapping(path = "/login")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO login(@RequestBody UserPostDTO userPostDTO) {
+        // convert API user to internal representation
+        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+
+        System.out.println("Getting user by username");
+        Optional<User> user = userService.getUserByUserName(userInput.getUsername());
+        if(user.isPresent()) {
+            // convert internal representation of user back to API
+            User existingUser = user.get();
+            System.out.println("Given password: " + userInput.getPassword());
+            System.out.println("Correct password: " + existingUser.getPassword());
+            if(existingUser.getPassword().equals(userInput.getPassword())) {
+                return DTOMapper.INSTANCE.convertEntityToUserGetDTO(existingUser);
+            }
+            else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The username and password do not match!");
+            }
+
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The user does not exist!");
+        }
+
+    }
+
+  @GetMapping(path = "/{userIdentifier}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public UserGetDTO getUser(@PathVariable long userId) {
+  public UserGetDTO getUser(@PathVariable String userIdentifier) {
       UserGetDTO userGetDTO;
-      Optional<User> user = userService.getUser(userId);
+      Optional<User> user;
+      try {
+          long userId = Long.parseLong(userIdentifier);
+          user = userService.getUserById(userId);
+      } catch (NumberFormatException e) {
+          System.out.println("Input String cannot be parsed to Integer.");
+          String userName = userIdentifier;
+          user = userService.getUserByUserName(userName);
+      }
       if(user.isPresent()){
-
           return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user.get());
       }
       else {
           return new UserGetDTO();
       }
-
     }
 
   @GetMapping()
