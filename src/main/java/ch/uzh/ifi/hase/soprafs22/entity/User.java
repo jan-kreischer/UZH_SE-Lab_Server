@@ -1,9 +1,12 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,6 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "user")
+@DynamicUpdate
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -60,11 +64,14 @@ public class User implements Serializable {
   @Column(nullable = true)
   private UserStatus status;
 
+  @Column(columnDefinition = "boolean default false")
+  private Boolean loggedIn;
+
   @Column(nullable = true, unique = false)
   private Date birthDate;
 
   @Column(nullable = true, unique = false)
-  private Date creationDate;
+  private LocalDate creationDate;
 
 
   public Long getId() {
@@ -107,7 +114,23 @@ public class User implements Serializable {
     this.status = status;
   }
 
+  public Boolean getLoggedIn() {
+        return this.loggedIn;
+    }
+
+    public void setLoggedIn (Boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
   public String getPassword() { return password; }
 
   public void setPassword(String password) { this.password = password; }
+
+    public LocalDate getCreationDate() { return creationDate; }
+
+    public void setCreationDate(LocalDate creationDate) { this.creationDate = creationDate; }
+
+    public Date getBirthDate() { return birthDate; }
+
+    public void setBirthDate(Date birthDate) { this.birthDate = birthDate; }
 }
