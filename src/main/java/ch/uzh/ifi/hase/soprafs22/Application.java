@@ -26,29 +26,6 @@ public class Application {
     return "The application is running.";
   }
 
-  /*
-  @PostMapping(value = "/users", produces="application/json")
-  @ResponseStatus(HttpStatus.OK)
-  @ResponseBody
-  public String helloPostWorld() {
-      return "{\"test\": \"Hello using @ResponseBody juhu\"}";
-  }
-
-  @GetMapping(value = "/users", produces="application/json")
-  //@ResponseStatus(HttpStatus.OK)
-  //@ResponseBody
-  public String getUsers() {
-      return "{\"test\": \"Hello using @ResponseBody juhu\"}";
-  }
-
-  @GetMapping(path = "/users/{user_id}")
-  @ResponseStatus(HttpStatus.OK)
-  @ResponseBody
-  public ResponseEntity get_user() {
-      System.out.println("/user/{user_id}");
-      return new ResponseEntity<>("/user/{user_id}", HttpStatus.OK);
-  }*/
-
   @Bean
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
