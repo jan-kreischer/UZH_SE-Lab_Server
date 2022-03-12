@@ -23,6 +23,7 @@ import java.util.Optional;
  * The controller will receive the request and delegate the execution to the
  * UserService and finally return the result.
  */
+@CrossOrigin(origins = "https://sopra-fs22-bauer-jan-client.herokuapp.com", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
