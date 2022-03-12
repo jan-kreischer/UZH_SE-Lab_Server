@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import org.slf4j.Logger;
@@ -87,16 +86,6 @@ public class UserService {
     System.out.println("Test");
     log.debug("Created Information for User: {}", newUser);
     return newUser;
-  }
-
-  public User setUserOnline(User user) {
-      user.setStatus(UserStatus.ONLINE);
-      return user;
-  }
-
-  public User setUserOffline(User user) {
-      user.setStatus(UserStatus.OFFLINE);
-      return user;
   }
 
   /**

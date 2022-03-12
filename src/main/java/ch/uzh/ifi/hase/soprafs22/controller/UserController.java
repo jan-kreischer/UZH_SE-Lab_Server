@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
@@ -46,11 +45,9 @@ public class UserController {
         if(user.isPresent()) {
             // convert internal representation of user back to API
             User existingUser = user.get();
-            existingUser = userService.setUserOnline(existingUser);
             System.out.println("Given password: " + userInput.getPassword());
             System.out.println("Correct password: " + existingUser.getPassword());
             if(existingUser.getPassword().equals(userInput.getPassword())) {
-                existingUser.setStatus(UserStatus.ONLINE);
                 existingUser.setLoggedIn(true);
                 existingUser = userService.update(existingUser);
                 return DTOMapper.INSTANCE.convertEntityToUserGetDTO(existingUser);
@@ -73,7 +70,6 @@ public class UserController {
       Optional<User> user = userService.getUserById(userId);
       if(user.isPresent()){
           user.get().setLoggedIn(false);
-          user.get().setStatus(UserStatus.OFFLINE);
           User updatedUser = userService.update(user.get());
           return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
       }
@@ -125,7 +121,6 @@ public class UserController {
   public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
     // convert API user to internal representation
     User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-    userInput.setStatus(UserStatus.ONLINE);
     userInput.setLoggedIn(true);
 
     // create user

@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -61,9 +60,6 @@ public class User implements Serializable {
   @Column(nullable = false, unique = true)
   private String token;
 
-  @Column(nullable = true)
-  private UserStatus status;
-
   @Column(columnDefinition = "boolean default false")
   private Boolean loggedIn;
 
@@ -104,14 +100,6 @@ public class User implements Serializable {
 
   public void setToken(String token) {
     this.token = token;
-  }
-
-  public UserStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(UserStatus status) {
-    this.status = status;
   }
 
   public Boolean getLoggedIn() {
